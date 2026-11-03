@@ -59,4 +59,4 @@ for employee in employees:
     print(employee.name)
 
     for shift in employee.assigned_shifts:
-        print(shift.day ,shift.start_time, shift.end_time)
+        print(shift.day ,shift.start_time, shift.end_time, employee.assigned_roles[shift])

@@ -5,6 +5,7 @@ class Employee:
         self.max_hours = max_hours
         self.availability = availability
         self.assigned_shifts = assigned_shifts
+        self.assigned_roles = {}
     def hours_worked(self):
         total = 0
         for shift in self.assigned_shifts:
