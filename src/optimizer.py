@@ -1,4 +1,3 @@
-from numpy import quantile
 from ortools.sat.python import cp_model
 
 from .scheduler import is_available
@@ -63,7 +62,7 @@ def generate_schedule(employees, shifts):
         for y in range(len(shifts)):
             if solver.value(assigned[x, y]) == 1:
                 employees[x].assigned_shifts.append(shifts[y])
-            for qualification in shifts[y].required_qualifications:
-                if solver.value(role_assigned[x, y, qualification]) == 1:
-                    employees[x].assigned_roles[shifts[y]] = qualification
+                for qualification in shifts[y].required_qualifications:
+                    if solver.value(role_assigned[x, y, qualification]) == 1:
+                        employees[x].assigned_roles[shifts[y]] = qualification
     return True
