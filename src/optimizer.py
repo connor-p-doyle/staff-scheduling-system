@@ -1,5 +1,7 @@
 from ortools.sat.python import cp_model
+
 from .scheduler import is_available
+
 def generate_schedule(employees, shifts):
     model = cp_model.CpModel()
     assigned = {}
@@ -9,8 +11,44 @@ def generate_schedule(employees, shifts):
 
     for y in range(len(shifts)):
         model.add(sum(assigned[x,y] for x in range(len(employees))) == shifts[y].required_workers)
-        
+
     for x in range(len(employees)):
         for y in range(len(shifts)):
-            if not is_available(employees[x], shifts[y]):
+            if not is_available(employees[x], shifts[y]): 
                 model.add(assigned[x, y] == 0)
+
+    for x in range(len(employees)):
+        model.add(sum(assigned[x, y] * shifts[y].duration() for y in range(len(shifts))) <= employees[x].max_hours)
+
+    for x in range(len(employees)):
+        for first_shift in range(len(shifts)):
+            for second_shift in range(first_shift + 1, len(shifts)):
+                shift_a = shifts[first_shift]
+                shift_b = shifts[second_shift]
+
+                same_day = shift_a.day.lower() == shift_b.day.lower()
+
+                overlap = (shift_a.start_time < shift_b.end_time and shift_a.end_time > shift_b.start_time)
+
+                if overlap and same_day:
+                    model.add(assigned[x, first_shift] + assigned[x, second_shift] <= 1)
+    role_assigned = {}
+
+    for x in range(len(employees)):
+        for y in range(len(shifts)):
+            for qualification in shifts[y].required_qualifications:
+                role_assigned[x,y, qualification] = model.new_bool_var(f"Role_{x}_{y}_{qualification}")
+
+    for x in range(len(employees)):
+        for y in range(len(shifts)):
+            for qualification in shifts[y].required_qualifications:
+                if qualification not in employees[x].qualifications:
+                    model.add(role_assigned[x,y, qualification] == 0)
+    
+    for x in range(len(employees)):
+        for y in range(len(shifts)):
+            model.add(sum(role_assigned[x,y, qualification] for qualification in shifts[y].required_qualifications) == assigned[x, y])
+
+    for y in range(len(shifts)):
+        for qualification, required_count in shifts[y].required_qualifications.items():
+            model.add(sum(role_assigned[x, y, qualification] for x in range(len(employees))) == required_count)
