@@ -27,7 +27,7 @@ def generate_schedule(employees, shifts):
                 shift_b = shifts[second_shift]
 
                 if shifts_overlap(shift_a, shift_b):
-                    model.add(assigned[x, shift_a] + assigned[x, shift_b] <= 1)
+                    model.add(assigned[x, first_shift] + assigned[x, second_shift] <= 1)
     role_assigned = {}
 
     for x in range(len(employees)):

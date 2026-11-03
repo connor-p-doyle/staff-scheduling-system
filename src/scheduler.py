@@ -22,7 +22,7 @@ def within_max_hours(employee, shift):
 def shifts_overlap(shift_a, shift_b):
     if shift_a.day.lower() != shift_b.day.lower():
         return False
-    return (shift_a.start_time < shift_b.end_time and shift_a.end_time < shift_b.start_time)
+    return (shift_a.start_time < shift_b.end_time and shift_a.end_time > shift_b.start_time)
 def has_shift_conflict(employee, new_shift):
     for assigned_shift in employee.assigned_shifts:
         if shifts_overlap(assigned_shift, new_shift):
