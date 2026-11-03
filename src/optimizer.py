@@ -1,6 +1,6 @@
 from ortools.sat.python import cp_model
 
-from .scheduler import is_available
+from .scheduler import is_available, shifts_overlap
 
 def generate_schedule(employees, shifts):
     model = cp_model.CpModel()
@@ -26,12 +26,8 @@ def generate_schedule(employees, shifts):
                 shift_a = shifts[first_shift]
                 shift_b = shifts[second_shift]
 
-                same_day = shift_a.day.lower() == shift_b.day.lower()
-
-                overlap = (shift_a.start_time < shift_b.end_time and shift_a.end_time > shift_b.start_time)
-
-                if overlap and same_day:
-                    model.add(assigned[x, first_shift] + assigned[x, second_shift] <= 1)
+                if shifts_overlap(shift_a, shift_b):
+                    model.add(assigned[x, shift_a] + assigned[x, shift_b] <= 1)
     role_assigned = {}
 
     for x in range(len(employees)):
