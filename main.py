@@ -15,10 +15,10 @@ connor_availability = {
 alex_availability = {
     "monday": [(9, 17)],
         "tuesday": [(10, 21)],
-        "wednesday": [2, 14],
+        "wednesday": [(2, 14)],
         "thursday": [(9, 17)],
         "friday": [(9, 13)],
-        "saturday": [2, 23],
+        "saturday": [(2, 23)],
         "sunday": []
 }
 employees = [
