@@ -52,3 +52,14 @@ def generate_schedule(employees, shifts):
     for y in range(len(shifts)):
         for qualification, required_count in shifts[y].required_qualifications.items():
             model.add(sum(role_assigned[x, y, qualification] for x in range(len(employees))) == required_count)
+    solver = cp_model.CpSolver()
+
+    status = solver.solve(model)
+
+    if status not in(cp_model.FEASIBLE, cp_model.OPTIMAL):
+        return False
+    for x in range(len(employees)):
+        for y in range(len(shifts)):
+            if solver.value(assigned[x, y]) == 1:
+                employees[x].assigned_shifts.append(shifts[y])
+    return True
