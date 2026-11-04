@@ -1,4 +1,3 @@
-import pytest
 from src.employee import Employee
 from src.shift import Shift
 from src.optimizer import generate_schedule

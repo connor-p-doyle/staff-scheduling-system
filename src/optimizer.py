@@ -54,7 +54,14 @@ def generate_schedule(employees, shifts):
     for x in range(len(employees)):
         employee_hours[x] = model.new_int_var(0, employees[x].max_hours, f"Hours_{x}")
         model.add(employee_hours[x] == sum(assigned[x, y] * shifts[y].duration() for y in range(len(shifts))))
-        
+
+    max_hours_worked = model.new_int_var(0, max(employee.max_hours for employee in employees), "MaxHoursWorked")
+
+    for x in range(len(employees)):
+        model.add(max_hours_worked >= employee_hours[x])
+
+    model.minimize(max_hours_worked)
+    
     solver = cp_model.CpSolver()
 
     status = solver.solve(model)
