@@ -60,7 +60,6 @@ def display_schedule(employees, shifts):
     for shift in shifts:
         print(f"{shift.day} | {shift.start_time} - {shift.end_time}")
         for employee in employees:
-            for x in employee.assigned_shifts:
-                if x.day.lower() == shift.day.lower():
-                    print(f"{employee.name} - {employee.assigned_roles[shift]}")
+            if shift in employee.assigned_shifts:
+                print(f"{employee.name} - {employee.assigned_roles[shift]}")
 display_schedule(employees, shifts)
