@@ -1,3 +1,4 @@
+import pytest
 from src.employee import Employee
 from src.shift import Shift
 from src.optimizer import generate_schedule
@@ -173,3 +174,40 @@ def test_generate_schedule_fails_when_employee_unavailable():
 
     assert result is False
     assert connor.assigned_shifts == []
+
+def test_generate_schedule_balances_employee_hours():
+    connor = Employee(
+        "Connor",
+        ["lifeguard"],
+        8,
+        make_availability(monday=[(9, 17)]),
+        []
+    )
+
+    alex = Employee(
+        "Alex",
+        ["lifeguard"],
+        8,
+        make_availability(monday=[(9, 17)]),
+        []
+    )
+
+    shifts = [
+        Shift("Monday", 9, 11, 1, {"lifeguard": 1}),
+        Shift("Monday", 11, 13, 1, {"lifeguard": 1}),
+        Shift("Monday", 13, 15, 1, {"lifeguard": 1}),
+        Shift("Monday", 15, 17, 1, {"lifeguard": 1})
+    ]
+
+    result = generate_schedule(
+        [connor, alex],
+        shifts
+    )
+
+    assert result is True
+
+    assert connor.hours_worked() == 4
+    assert alex.hours_worked() == 4
+
+    assert len(connor.assigned_shifts) == 2
+    assert len(alex.assigned_shifts) == 2
