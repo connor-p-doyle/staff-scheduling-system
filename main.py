@@ -2,6 +2,13 @@ from src.employee import Employee
 from src.shift import Shift
 from src.optimizer import generate_schedule
 
+def display_schedule(employees, shifts):
+    print("WEEKLY SCHEDULE\n")
+    for shift in shifts:
+        print(f"{shift.day} | {shift.start_time} - {shift.end_time}")
+        for employee in employees:
+            if shift in employee.assigned_shifts:
+                print(f"{employee.name} - {employee.assigned_roles[shift]}")
 
 connor_availability = {
     "monday": [(9, 17)],
@@ -53,13 +60,10 @@ shifts = [
 
 success = generate_schedule(employees, shifts)
 
-print(success)
+if success:
+    display_schedule(employees, shifts)
+else:
+    print("No valid schedule could be generated")
 
-def display_schedule(employees, shifts):
-    print("WEEKLY SCHEDULE\n")
-    for shift in shifts:
-        print(f"{shift.day} | {shift.start_time} - {shift.end_time}")
-        for employee in employees:
-            if shift in employee.assigned_shifts:
-                print(f"{employee.name} - {employee.assigned_roles[shift]}")
-display_schedule(employees, shifts)
+
+
