@@ -1,31 +1,31 @@
-# staff-scheduling-system
+# Staff Scheduling System
 Workplace scheduling system that generates optimized weekly schedules based on employee availability, qualifications, shift requirements, and maximum hours.
 
 The scheduler uses Google OR-Tools CP-SAT to find valid employee assignments while also satisfying all constraints and minimizing the maximum number of hours assigned to any employee.
 
 ## Features
 
-Generates employee-to-shift assignments.
+- Generates employee-to-shift assignments.
 
-Adheres to employee availability.
+- Adheres to employee availability.
 
-Prevents shift overlap.
+- Prevents shift overlap.
 
-Follows employee maximum working hours.
+- Follows employee maximum working hours.
 
-Matches employees to required qualifications.
+- Matches employees to required qualifications.
 
-Assigns an exact role count for each shift.
+- Assigns an exact role count for each shift.
 
-Enforces worker count.
+- Enforces worker count.
 
-Detects when no valid schedule exists.
+- Detects when no valid schedule exists.
 
-Balances workloads to ensure fairness using an optimization objective.
+- Balances workloads to ensure fairness using an optimization objective.
 
-Includes automated tests.
+- Includes automated tests.
 
-## Structure
+## Project Structure
 
 ```text
 staff-scheduling-system/
@@ -86,9 +86,9 @@ Run full test suite with:
 py -m pytest -v
 ```
 
- The tests cover scheduling rules including availability, qualifications, maximum hours, overlap, role requirements, impossible schedules, and workload fairness.
+The tests cover scheduling rules including availability, qualifications, maximum hours, overlap, role requirements, impossible schedules, and workload fairness.
 
- ## Technologies
+## Technologies
 
  - Python
  
