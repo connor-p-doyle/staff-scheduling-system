@@ -1,9 +1,9 @@
-# staff-scheduling-system
+## staff-scheduling-system
 Workplace scheduling system that generates optimized weekly schedules based on employee availability, qualifications, shift requirements, and maximum hours.
 
 The scheduler uses Google OR-Tools CP-SAT to find valid employee assignments while also satisfying all constraints and minimizing the maximum number of hours assigned to any employee.
 
-# Features
+## Features
 
 Generates employee-to-shift assignments.
 
@@ -18,13 +18,13 @@ Matches employees to required qualifications.
 Assigns an exact role count for each shift
 Enforces worker count.
 
-Detects when no valid schedule exist.
+Detects when no valid schedule exists.
 
 Balances workloads to ensure fairness using an optimization objective.
 
 Includes automated tests.
 
-# Structure
+## Structure
 
 staff-scheduling-system/
 ├── main.py
@@ -40,7 +40,7 @@ staff-scheduling-system/
     └── test_optimizer.py
 employee.py contains a class that represents each employee including information such as qualifications, availability, maximum hours, and assigned shifts.
 
-shift.py defines all shift requirements includig working times, required workers and required qualifications.
+shift.py defines all shift requirements including working times, required workers and required qualifications.
 
 scheduler.py contains reusable schedule rules and constraints.
 
@@ -48,12 +48,12 @@ optimizer.py builds and solves a scheduling model using Google OR-Tools CP-SAT.
 
 main.py provides example employee and shift data and displays a generated schedule.
 
-# Installation 
+## Installation 
 
-Clone the repository and install required depenencies:
+Clone the repository and install required dependencies:
 py -m pip install -r requirements.txt
 
-# Running the Program
+## Running the Program
 
 From project root:
 py main.py
@@ -65,14 +65,14 @@ Monday | 9 - 13
 Connor - lifeguard
 Alex - supervisor
 
-# Running Tests
+## Running Tests
 
 Run full test suite with:
 py -m pytest -v
 
- The tests cover scheduling rules including availability, qualifications, maxmium hours, overlap, role requirements, impossible schedules, and workload fariness.
+ The tests cover scheduling rules including availability, qualifications, maximum hours, overlap, role requirements, impossible schedules, and workload fairness.
 
- # Technologies
+ ## Technologies
 
  Python
  
