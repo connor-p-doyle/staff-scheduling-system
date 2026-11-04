@@ -55,8 +55,12 @@ success = generate_schedule(employees, shifts)
 
 print(success)
 
-for employee in employees:
-    print(employee.name)
-
-    for shift in employee.assigned_shifts:
-        print(shift.day ,shift.start_time, shift.end_time, employee.assigned_roles[shift])
+def display_schedule(employees, shifts):
+    print("WEEKLY SCHEDULE\n")
+    for shift in shifts:
+        print(f"{shift.day} | {shift.start_time} - {shift.end_time}")
+        for employee in employees:
+            for x in employee.assigned_shifts:
+                if x.day.lower() == shift.day.lower():
+                    print(f"{employee.name} - {employee.assigned_roles[shift]}")
+display_schedule(employees, shifts)
